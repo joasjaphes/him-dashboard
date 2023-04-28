@@ -1,0 +1,68 @@
+@import '../style-variables.scss';
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1em;
+    padding: 20px 30px;
+
+    .grid-item {
+        background-color: white;
+        // border: 1px solid rgb(211, 211, 211);
+        border-radius: 5px;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 10px;
+
+        .grid-item-content {
+            line-height: 35px;
+
+            .value {
+                font-weight: bolder;
+                font-size: 40px;
+            }
+
+            .title {
+                font-weight: bold;
+                // font-size: 18px;
+            }
+        }
+    }
+
+    .total {
+        background-color: $primary;
+    }
+
+    .completed {
+        background-color: rgb(221, 182, 7);
+    }
+
+    .success {
+        background-color: rgb(66, 179, 66);
+    }
+
+    .failed {
+        background-color: rgb(250, 52, 52);
+    }
+
+}
+
+.active-filter {
+    background-color: rgb(1, 1, 83);
+}
+
+.channels-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 30px;
+    column-gap: 1em;
+    .table {
+        th {
+            background-color: $primary;
+        }
+        td{
+            background-color: white;
+        }
+    }
+}
