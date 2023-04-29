@@ -7,6 +7,7 @@ import * as Highcharts from 'highcharts';
 import HC_more from 'highcharts/highcharts-more';
 import exporting from 'highcharts/modules/exporting';
 import { SeriesOptionsType } from 'highcharts';
+import { fadeIn } from './animation';
 
 HC_more(Highcharts);
 
@@ -14,6 +15,7 @@ HC_more(Highcharts);
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [fadeIn]
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -53,12 +55,15 @@ export class AppComponent implements OnInit {
   selectedFilterMode = '1M';
   loading = false;
 
+  customStartDate: any;
+  customEndDate: any;
+
   ngOnInit() {
     this.getData().then();
   }
 
   drawMetricChart() {
-    const channelsData = this.channels.filter(c => c.totalTransactions > 0);
+    const channelsData = this.channels.filter((c) => c.totalTransactions > 0);
     const data: SeriesOptionsType[] = [
       {
         name: 'Total transactions',
@@ -70,16 +75,23 @@ export class AppComponent implements OnInit {
         name: 'Successful transactions',
         color: 'rgb(66, 179, 66)',
         type: 'column',
-        data: channelsData.filter(c => c.totalTransactions > 0).map((c) => c.sucessTransactions),
+        data: channelsData
+          .filter((c) => c.totalTransactions > 0)
+          .map((c) => c.sucessTransactions),
       },
       {
         name: 'Failed transactions',
         color: 'rgb(250, 52, 52)',
         type: 'column',
-        data: channelsData.filter(c => c.totalTransactions > 0).map((c) => c.failedTransactions),
+        data: channelsData
+          .filter((c) => c.totalTransactions > 0)
+          .map((c) => c.failedTransactions),
       },
     ];
     const options = {
+      credits: {
+        enabled: false,
+      },
       chart: {
         type: 'bar',
       },
@@ -189,7 +201,7 @@ export class AppComponent implements OnInit {
   }
 
   async onHr() {
-    this.selectedFilterMode = '1hr'
+    this.selectedFilterMode = '1hr';
     await this.getData(
       moment().subtract(1, 'h').format('YYYY-MM-DDTHH:mm:ss'),
       moment().format('YYYY-MM-DDTHH:mm:ss')
@@ -197,7 +209,7 @@ export class AppComponent implements OnInit {
   }
 
   async onDay() {
-    this.selectedFilterMode = '1d'
+    this.selectedFilterMode = '1d';
     await this.getData(
       moment().subtract(1, 'd').format('YYYY-MM-DDTHH:mm:ss'),
       moment().format('YYYY-MM-DDTHH:mm:ss')
@@ -205,7 +217,7 @@ export class AppComponent implements OnInit {
   }
 
   async onWeek() {
-    this.selectedFilterMode = '1w'
+    this.selectedFilterMode = '1w';
     await this.getData(
       moment().subtract(1, 'w').format('YYYY-MM-DDTHH:mm:ss'),
       moment().format('YYYY-MM-DDTHH:mm:ss')
@@ -213,7 +225,7 @@ export class AppComponent implements OnInit {
   }
 
   async onMonth() {
-    this.selectedFilterMode = '1M'
+    this.selectedFilterMode = '1M';
     await this.getData(
       moment().subtract(1, 'M').format('YYYY-MM-DDTHH:mm:ss'),
       moment().format('YYYY-MM-DDTHH:mm:ss')
@@ -221,10 +233,23 @@ export class AppComponent implements OnInit {
   }
 
   async onYear(years = 1) {
-    this.selectedFilterMode = `${years}y`
+    this.selectedFilterMode = `${years}y`;
     await this.getData(
       moment().subtract(years, 'y').format('YYYY-MM-DDTHH:mm:ss'),
       moment().format('YYYY-MM-DDTHH:mm:ss')
     );
+  }
+
+  async onCustom() {
+    this.selectedFilterMode = 'custom';
+  }
+
+  async onCustomEndDate() {
+    if (this.customStartDate && this.customEndDate) {
+      await this.getData(
+        moment(this.customStartDate).format('YYYY-MM-DDTHH:mm:ss'),
+        moment(this.customEndDate).format('YYYY-MM-DDTHH:mm:ss')
+      );
+    }
   }
 }

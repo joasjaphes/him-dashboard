@@ -7,6 +7,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { PlaceholderComponent } from './placeholder/placeholder.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
   declarations: [AppComponent, PlaceholderComponent],
@@ -16,6 +21,10 @@ import { PlaceholderComponent } from './placeholder/placeholder.component';
     HttpClientModule,
     MatCardModule,
     HighchartsChartModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent],

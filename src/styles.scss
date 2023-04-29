@@ -1,4 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import './style-variables.scss';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    // background-color: rgb(240, 240, 240);
+    // background-image: url('assets/background.jpg');
+    // background-repeat: no-repeat;
+    // background-size: cover;
+
+}
+
+body::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(218, 218, 218);
+}
